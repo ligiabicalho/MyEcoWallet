@@ -1,5 +1,5 @@
 import { WALLET_EDIT } from '../actions';
-import store from '../store';
+// import store from '../store';
 
 const INITIAL_STATE = {
   currencies: [], // array de string
@@ -12,7 +12,7 @@ function wallet(state = INITIAL_STATE, { type, payload }) {
   switch (type) {
   case WALLET_EDIT:
     return {
-      ...store,
+      // ...store,
       currencies: payload.currencies,
       expenses: payload.expenses,
       editor: payload.editor,
