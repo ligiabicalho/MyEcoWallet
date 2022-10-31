@@ -8,6 +8,7 @@ function user(state = INITIAL_STATE, { type, payload }) {
   switch (type) {
   case USER_LOGIN:
     return {
+      ...state,
       email: payload,
     };
   default:
