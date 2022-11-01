@@ -8,7 +8,7 @@ import { actionFetchCurrencies } from '../redux/actions';
 class Wallet extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(actionFetchCurrencies());
+    dispatch(actionFetchCurrencies(), console.log('Wallet Page: actionFetchCurrencies'));
   }
 
   render() {
