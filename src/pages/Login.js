@@ -38,6 +38,7 @@ class Login extends React.Component {
     const { email } = this.state;
     const { dispatch, history } = this.props;
     dispatch(actionCreator(USER_LOGIN, email));
+    // dispatch(actionFetchCurrencies(), console.log('fetch login'));
     history.push('/carteira');
   };
 
