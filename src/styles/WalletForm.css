@@ -1,10 +1,8 @@
 .wallet-form {
-
-  /* align-items: center; */
-
-  /* background-color: #f1f1f1; */
+  align-items: center;
+  background-color: #f1f1f1;
   display: flex;
-  height: 100vh;
+  height: 30vh;
   justify-content: center;
   margin: 0 auto;
 }
@@ -12,8 +10,9 @@
 form {
   align-items: center;
   background-color: #f1f1f1;
+  border: 1px solid black;
   display: flex;
-  height: 10vh;
+  height: 15vh;
   justify-content: center;
   margin: 0 auto;
   width: 95vw;
@@ -30,10 +29,9 @@ input {
   align-items: center;
   display: flex;
   justify-content: center;
-  margin: 0 auto;
+  margin-left: 4px;
 }
 
 select {
-  margin-bottom: 10px;
-  margin-top: 10px;
+  margin-left: 4px;
 }

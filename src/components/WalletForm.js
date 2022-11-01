@@ -142,18 +142,20 @@ class WalletForm extends Component {
               </option>
             </select>
           </label>
-          <button
-            type="button"
-            disabled={
-              (value && description && currency && method && tag)
-                ? ''
-                : 'disabled'
-            }
-            onClick={ this.handleAddExpenses }
-          >
-            Adicionar despesa
-
-          </button>
+          <label htmlFor="btn-add">
+            <button
+              id="btn-add"
+              type="button"
+              disabled={
+                (value && description && currency && method && tag)
+                  ? ''
+                  : 'disabled'
+              }
+              onClick={ this.handleAddExpenses }
+            >
+              Adicionar despesa
+            </button>
+          </label>
         </form>
       </div>
     );
