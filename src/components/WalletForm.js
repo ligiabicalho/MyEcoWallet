@@ -77,9 +77,6 @@ class WalletForm extends Component {
               data-testid="currency-input"
               required
             >
-              <option value="select">
-                Selecione
-              </option>
               {currencies.map((curr, i) => (
                 <option key={ i } value={ curr }>
                   {curr}
@@ -98,9 +95,6 @@ class WalletForm extends Component {
               data-testid="method-input"
               required
             >
-              <option value="select">
-                Selecione
-              </option>
               <option value="Dinheiro">
                 Dinheiro
               </option>
@@ -122,9 +116,6 @@ class WalletForm extends Component {
               data-testid="tag-input"
               required
             >
-              <option value="select">
-                Selecione
-              </option>
               <option value="Alimentação">
                 Alimentação
               </option>
@@ -142,20 +133,18 @@ class WalletForm extends Component {
               </option>
             </select>
           </label>
-          <label htmlFor="btn-add">
-            <button
-              id="btn-add"
-              type="button"
-              disabled={
-                (value && description && currency && method && tag)
-                  ? ''
-                  : 'disabled'
-              }
-              onClick={ this.handleAddExpenses }
-            >
-              Adicionar despesa
-            </button>
-          </label>
+          <button
+            id="btn-add"
+            type="button"
+            disabled={
+              (value && description && currency && method && tag)
+                ? ''
+                : 'disabled'
+            }
+            onClick={ this.handleAddExpenses }
+          >
+            Adicionar despesa
+          </button>
         </form>
       </div>
     );
