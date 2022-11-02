@@ -8,9 +8,9 @@ class WalletForm extends Component {
   state = {
     value: '',
     description: '',
-    currency: '',
-    method: '',
-    tag: '',
+    currency: 'USD',
+    method: 'Dinheiro',
+    tag: 'Alimentação',
   };
 
   handleChange = ({ target }) => {
