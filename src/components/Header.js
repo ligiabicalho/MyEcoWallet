@@ -13,7 +13,7 @@ class Header extends Component {
       }, 0);
       return parseFloat(expensesTotal).toFixed(2);
     }
-    if (expenses.length === 0) { return '0,00'; }
+    if (expenses.length === 0) { return '0.00'; }
   };
 
   render() {

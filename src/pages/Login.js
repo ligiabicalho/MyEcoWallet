@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { actionCreator, USER_LOGIN } from '../redux/actions';
+import '../styles/Login.css';
 
 class Login extends React.Component {
   state = {
@@ -38,7 +39,6 @@ class Login extends React.Component {
     const { email } = this.state;
     const { dispatch, history } = this.props;
     dispatch(actionCreator(USER_LOGIN, email));
-    // dispatch(actionFetchCurrencies(), console.log('fetch login'));
     history.push('/carteira');
   };
 
@@ -46,6 +46,7 @@ class Login extends React.Component {
     const { disabled, email, password } = this.state;
     return (
       <div className="login-page">
+        <h1>Trybe Wallet</h1>
         <form>
           <label htmlFor="email">
             E-mail:

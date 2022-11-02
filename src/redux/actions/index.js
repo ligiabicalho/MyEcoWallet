@@ -1,5 +1,6 @@
 export const USER_LOGIN = 'USER_LOGIN';
 export const WALLET_ADD = 'WALLET_ADD';
+export const WALLET_DELETE = 'WALLET_DELETE';
 export const WALLET_EDIT = 'WALLET_EDIT';
 
 export const REQUEST_STARTED = 'REQUEST_STARTED';

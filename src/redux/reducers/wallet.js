@@ -1,5 +1,5 @@
 import {
-  WALLET_ADD, WALLET_EDIT, REQUEST_STARTED, RECEIVE_EXCHANGE,
+  WALLET_ADD, WALLET_EDIT, WALLET_DELETE, REQUEST_STARTED, RECEIVE_EXCHANGE,
   RECEIVE_CURRENCIES, FAILED_REQUEST } from '../actions';
 
 const INITIAL_STATE = {
@@ -39,6 +39,11 @@ function wallet(state = INITIAL_STATE, { type, payload }) {
     return {
       ...state,
       expenses: [...state.expenses, payload],
+    };
+  case WALLET_DELETE:
+    return {
+      ...state,
+      expenses: payload,
     };
   case WALLET_EDIT:
     return {

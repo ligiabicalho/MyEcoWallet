@@ -2,8 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import '../styles/Table.css';
+import { actionCreator, WALLET_DELETE } from '../redux/actions';
 
 class Table extends Component {
+  handleDeleteExpenses = (id) => {
+    const { dispatch, expenses } = this.props;
+    const deleteExpense = expenses.filter((expense) => expense.id !== id);
+    dispatch(actionCreator(WALLET_DELETE, deleteExpense));
+  };
+
   render() {
     const { expenses } = this.props;
     return (
@@ -24,7 +31,6 @@ class Table extends Component {
             </tr>
           </thead>
           <tbody>
-            {console.log('prop expenses', expenses)}
             {expenses.length > 0
             && expenses.map((expense, i) => (
               <tr key={ i }>
@@ -42,7 +48,16 @@ class Table extends Component {
                     .ask).toFixed(2)}
                 </td>
                 <td>Real</td>
-                <td><button type="button">Editar</button></td>
+                <td>
+                  <button
+                    type="button"
+                    data-testid="delete-btn"
+                    onClick={ () => this.handleDeleteExpenses(expense.id) }
+                  >
+                    Delete
+                  </button>
+
+                </td>
               </tr>
             ))}
           </tbody>
