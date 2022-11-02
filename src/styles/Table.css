@@ -1,6 +1,7 @@
 .table-page {
-  align-items: flex-start;
+  align-items: center;
   display: flex;
+  flex-direction: column;
   height: 50vh;
   justify-content: flex-start;
   margin: 20px;
