@@ -32,8 +32,8 @@ class Table extends Component {
           </thead>
           <tbody>
             {expenses.length > 0
-            && expenses.map((expense, i) => (
-              <tr key={ i }>
+            && expenses.map((expense) => (
+              <tr key={ expense.id }>
                 <td>{expense.description}</td>
                 <td>{expense.tag}</td>
                 <td>{expense.method}</td>
@@ -73,6 +73,7 @@ const mapStateToProps = ({ wallet }) => ({
 
 Table.propTypes = {
   expenses: PropTypes.arrayOf,
+  dispatch: PropTypes.func,
 }.isRequired;
 
 export default connect(mapStateToProps)(Table);

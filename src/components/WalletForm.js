@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import '../styles/WalletForm.css';
+import store from '../redux/store';
 import { actionCreator, actionFetchExchangeRates, WALLET_ADD } from '../redux/actions';
 
 class WalletForm extends Component {
@@ -21,19 +22,22 @@ class WalletForm extends Component {
   };
 
   handleAddExpenses = async () => {
-    const { isFetching, expenses, dispatch } = this.props;
+    const globalState = store.getState();
+    console.log('globalState', globalState);
+    const { expenses, dispatch } = this.props;
     const exchangeRates = await dispatch(actionFetchExchangeRates());
-    if (!isFetching) {
-      if (expenses.length > 0) {
-        const lastIndex = -1;
-        const lastExpense = expenses.slice(lastIndex)[0];
-        const nextID = lastExpense.id + 1;
-        const addExpense = { id: nextID, ...this.state, exchangeRates };
-        dispatch(actionCreator(WALLET_ADD, addExpense));
-      } else {
-        const addExpense = { id: 0, ...this.state, exchangeRates };
-        dispatch(actionCreator(WALLET_ADD, addExpense));
-      }
+    if (expenses.length > 0) {
+      const lastIndex = -1;
+      const lastExpense = expenses.slice(lastIndex)[0];
+      const nextID = lastExpense.id + 1;
+      const addExpense = { id: nextID, ...this.state, exchangeRates };
+      console.log('globalState id: 1', globalState);
+      dispatch(actionCreator(WALLET_ADD, addExpense));
+    } else {
+      const addExpense = { id: 0, ...this.state, exchangeRates };
+      dispatch(actionCreator(WALLET_ADD, addExpense));
+      const globalState0 = store.getState();
+      console.log('globalState id: 0', globalState0);
     }
   };
 
@@ -155,13 +159,11 @@ WalletForm.propTypes = {
   currencies: PropTypes.arrayOf,
   expenses: PropTypes.arrayOf,
   dispatch: PropTypes.func,
-  isFetching: PropTypes.bool,
 }.isRequired;
 
 const mapStateToProps = ({ wallet }) => ({
   currencies: wallet.currencies,
   expenses: wallet.expenses,
-  isFetching: wallet.isFetching,
 });
 
 export default connect(mapStateToProps)(WalletForm);

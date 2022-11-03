@@ -9,7 +9,7 @@ import { actionFetchCurrencies } from '../redux/actions';
 class Wallet extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(actionFetchCurrencies(), console.log('Wallet Page: actionFetchCurrencies'));
+    dispatch(actionFetchCurrencies());
   }
 
   render() {
@@ -17,7 +17,7 @@ class Wallet extends React.Component {
     return (
       <div className="wallet-page">
         <Header />
-        {isFetching ? 'Loading...' : <WalletForm />}
+        {isFetching ? 'Loading...' : <WalletForm /> }
         <Table />
       </div>
     );
