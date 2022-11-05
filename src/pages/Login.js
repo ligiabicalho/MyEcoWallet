@@ -6,7 +6,7 @@ import '../styles/Login.css';
 
 class Login extends React.Component {
   state = {
-    disabled: true,
+    disable: true,
     email: '',
     password: '',
   };
@@ -26,11 +26,11 @@ class Login extends React.Component {
     if (emailRegex.test(email)
         && validPass) {
       this.setState({
-        disabled: false,
+        disable: false,
       });
     } else {
       this.setState({
-        disabled: true,
+        disable: true,
       });
     }
   };
@@ -43,7 +43,7 @@ class Login extends React.Component {
   };
 
   render() {
-    const { disabled, email, password } = this.state;
+    const { disable, email, password } = this.state;
     return (
       <div className="login-page">
         <h1>Trybe Wallet</h1>
@@ -80,7 +80,7 @@ class Login extends React.Component {
           <br />
           <button
             type="button"
-            disabled={ disabled ? 'disabled' : '' }
+            disabled={ disable }
             onClick={ this.handleClick }
           >
             Entrar

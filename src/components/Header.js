@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import '../styles/Header.css';
 
 class Header extends Component {
-  handleExpenses = () => {
+  sumExpenses = () => {
     const { expenses } = this.props;
     if (expenses.length > 0) {
       const expensesTotal = expenses.reduce((acc, expense) => {
@@ -25,7 +25,7 @@ class Header extends Component {
           Despesa total:
           {' '}
           <span data-testid="total-field">
-            { this.handleExpenses() }
+            { this.sumExpenses() }
           </span>
           <span data-testid="header-currency-field">BRL</span>
         </div>

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import '../styles/WalletForm.css';
-import store from '../redux/store';
-import { actionCreator, actionFetchExchangeRates, WALLET_ADD } from '../redux/actions';
+import { actionCreator, actionFetchExchangeRates, WALLET_ADD,
+  WALLET_UPDATE } from '../redux/actions';
 
 class WalletForm extends Component {
   state = {
@@ -14,6 +14,15 @@ class WalletForm extends Component {
     tag: 'Alimentação',
   };
 
+  componentDidUpdate(prevProps) {
+    const { editor, idToEdit } = this.props;
+    console.log('antes if', editor, prevProps.editor);
+    if (editor && !prevProps.editor) { // !prevProps.editor evita loop infinito!!
+      this.valuesToEdit(idToEdit);
+    }
+    console.log('após if', editor, prevProps.editor);
+  }
+
   handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState({
@@ -21,28 +30,45 @@ class WalletForm extends Component {
     });
   };
 
-  handleAddExpenses = async () => {
-    const globalState = store.getState();
-    console.log('globalState', globalState);
-    const { expenses, dispatch } = this.props;
-    const exchangeRates = await dispatch(actionFetchExchangeRates());
-    if (expenses.length > 0) {
-      const lastIndex = -1;
-      const lastExpense = expenses.slice(lastIndex)[0];
-      const nextID = lastExpense.id + 1;
-      const addExpense = { id: nextID, ...this.state, exchangeRates };
-      console.log('globalState id: 1', globalState);
-      dispatch(actionCreator(WALLET_ADD, addExpense));
-    } else {
-      const addExpense = { id: 0, ...this.state, exchangeRates };
-      dispatch(actionCreator(WALLET_ADD, addExpense));
-      const globalState0 = store.getState();
-      console.log('globalState id: 0', globalState0);
-    }
+  valuesToEdit = (id) => {
+    const { expenses } = this.props;
+    const prevValues = expenses.find((expense) => expense.id === id);
+    this.setState({
+      value: prevValues.value,
+      description: prevValues.description,
+      currency: prevValues.currency,
+      method: prevValues.method,
+      tag: prevValues.tag,
+    });
   };
 
+  editExpense = (idToEdit) => {
+    const { dispatch } = this.props;
+    dispatch(actionCreator(WALLET_UPDATE, { id: idToEdit, ...this.state }));
+  };
+
+  handleAddExpenses = async () => {
+    const { expenses, dispatch, editor, idToEdit } = this.props;
+    const exchangeRates = await dispatch(actionFetchExchangeRates());
+    if (!editor) {
+      if (expenses.length > 0) {
+        const lastIndex = -1;
+        const lastExpense = expenses.slice(lastIndex)[0];
+        const nextID = lastExpense.id + 1;
+        const addExpense = { id: nextID, ...this.state, exchangeRates };
+        dispatch(actionCreator(WALLET_ADD, addExpense));
+      } else {
+        const addExpense = { id: 0, ...this.state, exchangeRates };
+        dispatch(actionCreator(WALLET_ADD, addExpense));
+      }
+    } else {
+      this.editExpense(idToEdit);
+    }
+  };
+  // slice, find, filter... cuidado ao usar! Não cria um array novo, mantém a referência no anterior, isso pode causar problemas. Ex: vc edita o retorno do método, o array parece atualizado, mas o JS não interpreta que mudou, não renderiza novamente o componente com os novos dados.
+
   render() {
-    const { currencies } = this.props;
+    const { currencies, editor } = this.props;
     const { value, description, currency, method, tag } = this.state;
     return (
       <div className="wallet-form">
@@ -147,7 +173,7 @@ class WalletForm extends Component {
             }
             onClick={ this.handleAddExpenses }
           >
-            Adicionar despesa
+            {editor ? 'Editar despesa' : 'Adicionar despesa'}
           </button>
         </form>
       </div>
@@ -159,11 +185,15 @@ WalletForm.propTypes = {
   currencies: PropTypes.arrayOf,
   expenses: PropTypes.arrayOf,
   dispatch: PropTypes.func,
+  editor: PropTypes.bool,
+  idToEdit: PropTypes.number,
 }.isRequired;
 
 const mapStateToProps = ({ wallet }) => ({
   currencies: wallet.currencies,
   expenses: wallet.expenses,
+  editor: wallet.editor,
+  idToEdit: wallet.idToEdit,
 });
 
 export default connect(mapStateToProps)(WalletForm);

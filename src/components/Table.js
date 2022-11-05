@@ -2,13 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import '../styles/Table.css';
-import { actionCreator, WALLET_DELETE } from '../redux/actions';
+import { actionCreator, WALLET_DELETE, WALLET_EDIT } from '../redux/actions';
 
 class Table extends Component {
-  handleDeleteExpenses = (id) => {
+  deleteExpense = (id) => {
     const { dispatch, expenses } = this.props;
     const deleteExpense = expenses.filter((expense) => expense.id !== id);
     dispatch(actionCreator(WALLET_DELETE, deleteExpense));
+    // neste caso, o filter retira um elemento do array, caso estivéssemos apenas editando uma chave, o JS não interpretaria como um novo array para ser renderizado.
+  };
+
+  startEditExpense = (id) => {
+    const { dispatch } = this.props;
+    dispatch(actionCreator(WALLET_EDIT, id));
   };
 
   render() {
@@ -34,6 +40,7 @@ class Table extends Component {
             {expenses.length > 0
             && expenses.map((expense) => (
               <tr key={ expense.id }>
+                {/* Não colocar key=index, pois como o array tanto pode aumentar como diminuir, irá alterar a key */}
                 <td>{expense.description}</td>
                 <td>{expense.tag}</td>
                 <td>{expense.method}</td>
@@ -51,8 +58,15 @@ class Table extends Component {
                 <td>
                   <button
                     type="button"
+                    data-testid="edit-btn"
+                    onClick={ () => this.startEditExpense(expense.id) }
+                  >
+                    Editar
+                  </button>
+                  <button
+                    type="button"
                     data-testid="delete-btn"
-                    onClick={ () => this.handleDeleteExpenses(expense.id) }
+                    onClick={ () => this.deleteExpense(expense.id) }
                   >
                     Delete
                   </button>

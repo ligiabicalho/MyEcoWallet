@@ -1,6 +1,7 @@
 export const USER_LOGIN = 'USER_LOGIN';
 export const WALLET_ADD = 'WALLET_ADD';
 export const WALLET_DELETE = 'WALLET_DELETE';
+export const WALLET_UPDATE = 'WALLET_UPDATE';
 export const WALLET_EDIT = 'WALLET_EDIT';
 
 export const REQUEST_STARTED = 'REQUEST_STARTED';
@@ -15,29 +16,30 @@ export const actionCreator = (type, payload) => ({
 
 const fetchAll = async (dispatch) => {
   try {
-    dispatch(actionCreator(REQUEST_STARTED, true));
+    dispatch(actionCreator(REQUEST_STARTED));
     const endpoint = 'https://economia.awesomeapi.com.br/json/all';
     const response = await fetch(endpoint);
     const data = await response.json();
+    delete data.USDT;
     return data;
   } catch (error) {
     dispatch(actionCreator(FAILED_REQUEST, error));
   }
 };
 
-const fetchCurrencies = async (dispatch) => {
-  const allCurrencies = Object.keys(await fetchAll(dispatch));
-  const currencies = allCurrencies.filter((c) => c !== 'USDT');
+// Duas maneiras de enviar action assíncrona (que deve enviar uma função):
+
+// 1- A action retorna uma outra função assíncrona;
+export const actionFetchCurrencies = () => async (dispatch) => {
+  const currencies = Object.keys(await fetchAll(dispatch));
   dispatch(actionCreator(RECEIVE_CURRENCIES, currencies));
 };
 
-export const actionFetchCurrencies = () => fetchCurrencies;
-
 const fetchExchangeRates = async (dispatch) => {
   const exchangeRates = await fetchAll(dispatch);
-  delete exchangeRates.USDT;
-  dispatch(actionCreator(REQUEST_STARTED, false));
+  dispatch(actionCreator(RECEIVE_EXCHANGE));
   return exchangeRates;
 };
 
+// 2- A action retorna uma variável que é uma função assíncrona:
 export const actionFetchExchangeRates = () => fetchExchangeRates;
