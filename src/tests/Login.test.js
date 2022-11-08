@@ -1,12 +1,13 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import { renderWithRouterAndRedux } from './helpers/renderWith';
 import { EMAIL_INPUT_TEST_ID, PASSWORD_INPUT_TEST_ID, VALID_EMAIL, VALID_PASSWORD,
   INVALID_EMAIL_0, INVALID_EMAIL_1, INVALID_EMAIL_2, INVALID_EMAIL_3, INVALID_PASSWORD } from './helpers/consts';
+import store from '../redux/store';
 
-describe('1 - Teste a pagina de Login', () => {
+describe('Teste a pagina de Login', () => {
   it('Verifica se a rota para esta página é "/"', () => {
     const { history } = renderWithRouterAndRedux(<App />);
 
@@ -62,12 +63,25 @@ describe('1 - Teste a pagina de Login', () => {
 
     userEvent.type(screen.getByTestId(EMAIL_INPUT_TEST_ID), VALID_EMAIL);
     userEvent.type(screen.getByTestId(PASSWORD_INPUT_TEST_ID), VALID_PASSWORD);
-    expect(screen.getByRole('button')).not.toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Entrar' })).not.toBeDisabled();
   });
   it.skip('Verifica se salva o email no estado da aplicação, com a chave email, assim que o usuário logar', () => {
     renderWithRouterAndRedux(<App />);
+    userEvent.type(screen.getByTestId(EMAIL_INPUT_TEST_ID), VALID_EMAIL);
+    userEvent.type(screen.getByTestId(PASSWORD_INPUT_TEST_ID), VALID_PASSWORD);
+    userEvent.click(screen.getByRole('button', { name: 'Entrar' }));
+
+    const state = store.getState(); // ??
+    expect(state.user.email).toContain(VALID_EMAIL);
   });
-  it.skip('Verifica se a rota é alterada para "/carteira" após o clique no botão', () => {
-    renderWithRouterAndRedux(<App />);
+  it('Verifica se a rota é alterada para "/carteira" após o clique no botão', () => {
+    const { history } = renderWithRouterAndRedux(<App />);
+
+    userEvent.type(screen.getByTestId(EMAIL_INPUT_TEST_ID), VALID_EMAIL);
+    userEvent.type(screen.getByTestId(PASSWORD_INPUT_TEST_ID), VALID_PASSWORD);
+    userEvent.click(screen.getByRole('button', { name: 'Entrar' }));
+
+    const { location: { pathname } } = history;
+    expect(pathname).toBe('/carteira');
   });
 });

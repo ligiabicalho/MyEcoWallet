@@ -10,15 +10,16 @@ export const EMAIL_INPUT_TEST_ID = 'email-input';
 export const PASSWORD_INPUT_TEST_ID = 'password-input';
 export const EMAIL_FIELD_TEST_ID = 'email-field';
 export const HEADER_CURRENCY_FIELD_TEST_ID = 'header-currency-field';
+export const TOTAL_FIELD_TEST_ID = 'total-field';
 export const CURRENCY_INPUT_TEST_ID = 'currency-input';
 export const VALUE_INPUT_TEST_ID = 'value-input';
 export const METHOD_INPUT_TEST_ID = 'method-input';
 export const TAG_INPUT_TEST_ID = 'tag-input';
-export const BTN_DELETE_TEST_ID = 'delete-btn';
 export const DESCRIPTION_INPUT_TEST_ID = 'description-input';
-export const TOTAL_FIELD_TEST_ID = 'total-field';
-export const EDIT_INPUT_TEST_ID = 'edit-btn';
+export const BTN_DELETE_TEST_ID = 'delete-btn';
 export const BTN_EDIT_TEST_ID = 'edit-btn';
+export const EDIT_INPUT_TEST_ID = 'edit-btn';
+export const BTN_ADD = 'Adicionar despesa';
 
 export const methodOptions = [
   'Dinheiro',

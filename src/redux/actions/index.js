@@ -16,7 +16,7 @@ export const actionCreator = (type, payload) => ({
 
 const fetchAll = async (dispatch) => {
   try {
-    dispatch(actionCreator(REQUEST_STARTED));
+    dispatch(actionCreator(REQUEST_STARTED)); // action -> isFetching: true;
     const endpoint = 'https://economia.awesomeapi.com.br/json/all';
     const response = await fetch(endpoint);
     const data = await response.json();
@@ -27,17 +27,17 @@ const fetchAll = async (dispatch) => {
   }
 };
 
-// Duas maneiras de enviar action assíncrona (que deve enviar uma função):
+// Duas maneiras de enviar action assíncrona (que deve retornar uma função):
 
 // 1- A action retorna uma outra função assíncrona;
 export const actionFetchCurrencies = () => async (dispatch) => {
   const currencies = Object.keys(await fetchAll(dispatch));
-  dispatch(actionCreator(RECEIVE_CURRENCIES, currencies));
+  dispatch(actionCreator(RECEIVE_CURRENCIES, currencies)); // action -> isFetching: false e currencies;
 };
 
 const fetchExchangeRates = async (dispatch) => {
   const exchangeRates = await fetchAll(dispatch);
-  dispatch(actionCreator(RECEIVE_EXCHANGE));
+  dispatch(actionCreator(RECEIVE_EXCHANGE)); // action -> isFetching: false;
   return exchangeRates;
 };
 

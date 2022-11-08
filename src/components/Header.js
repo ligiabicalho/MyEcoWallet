@@ -17,16 +17,20 @@ class Header extends Component {
   };
 
   render() {
-    const { email } = this.props;
+    const { email, isFetching } = this.props;
     return (
       <div className="header">
         <div className="header-email" data-testid="email-field">{email}</div>
         <div className="header-total">
           Despesa total:
           {' '}
-          <span data-testid="total-field">
-            { this.sumExpenses() }
-          </span>
+          {
+            isFetching ? <p>Loading</p>
+              : (
+                <span data-testid="total-field">
+                  {this.sumExpenses()}
+                </span>)
+          }
           <span data-testid="header-currency-field">BRL</span>
         </div>
       </div>
@@ -37,6 +41,7 @@ class Header extends Component {
 const mapStateToProps = ({ user, wallet }) => ({
   email: user.email,
   expenses: wallet.expenses,
+  isFetching: wallet.isFetching,
 });
 
 Header.propTypes = {

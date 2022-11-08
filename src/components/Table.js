@@ -18,7 +18,7 @@ class Table extends Component {
   };
 
   render() {
-    const { expenses } = this.props;
+    const { expenses, isFetching } = this.props;
     return (
       <div className="table-page">
         <h2>Table</h2>
@@ -37,7 +37,8 @@ class Table extends Component {
             </tr>
           </thead>
           <tbody>
-            {expenses.length > 0
+            {isFetching ? <tr><td>Loading</td></tr>
+              : (expenses.length > 0
             && expenses.map((expense) => (
               <tr key={ expense.id }>
                 {/* Não colocar key=index, pois como o array tanto pode aumentar como diminuir, irá alterar a key */}
@@ -73,7 +74,7 @@ class Table extends Component {
 
                 </td>
               </tr>
-            ))}
+            )))}
           </tbody>
         </table>
       </div>
@@ -83,6 +84,7 @@ class Table extends Component {
 
 const mapStateToProps = ({ wallet }) => ({
   expenses: wallet.expenses,
+  isFetching: wallet.isFetching,
 });
 
 Table.propTypes = {

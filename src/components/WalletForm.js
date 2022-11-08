@@ -16,11 +16,9 @@ class WalletForm extends Component {
 
   componentDidUpdate(prevProps) {
     const { editor, idToEdit } = this.props;
-    console.log('antes if', editor, prevProps.editor);
     if (editor && !prevProps.editor) { // !prevProps.editor evita loop infinito!!
       this.valuesToEdit(idToEdit);
     }
-    console.log('após if', editor, prevProps.editor);
   }
 
   handleChange = ({ target }) => {
