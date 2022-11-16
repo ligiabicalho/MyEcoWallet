@@ -12,8 +12,8 @@ import {
 
 describe('Testa a página da Carteira, Wallet page', () => {
   beforeEach(() => {
-    global.fetch = jest.fn(() => Promise.resolve({
-      json: () => Promise.resolve(mockData),
+    global.fetch = jest.fn(async () => ({
+      json: async () => mockData,
     }));
 
     renderWithRouterAndRedux(<App />);
@@ -116,6 +116,7 @@ describe('Testa a página da Carteira, Wallet page', () => {
     // const newTotalField = await screen.findByTestId(TOTAL_FIELD_TEST_ID);
     // expect(newTotalField).toHaveTextContent(expectedNewValue);
   });
+
   it('Verifica se as despesas são deletadas', async () => {
     const value = screen.getByTestId(VALUE_INPUT_TEST_ID);
     const description = screen.getByTestId(DESCRIPTION_INPUT_TEST_ID);

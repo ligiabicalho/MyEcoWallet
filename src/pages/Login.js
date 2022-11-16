@@ -52,13 +52,12 @@ class Login extends React.Component {
             E-mail:
             <input
               id="email"
-              type="email"
-              onChange={ this.handleChange }
-              value={ email }
               name="email"
-              pattern="/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/i"
-              title="Invalid email address"
+              type="email"
+              value={ email }
               data-testid="email-input"
+              onChange={ this.handleChange }
+              // pattern="/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/i"
               required
             />
           </label>
@@ -69,11 +68,11 @@ class Login extends React.Component {
               id="password"
               name="password"
               type="password"
+              value={ password }
+              data-testid="password-input"
+              onChange={ this.handleChange }
               // minLength="6"
               // pattern="[0-9a-zA-Z]{6}"
-              value={ password }
-              onChange={ this.handleChange }
-              data-testid="password-input"
               required
             />
           </label>
@@ -91,10 +90,10 @@ class Login extends React.Component {
   }
 }
 Login.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func,
   history: PropTypes.shape({
     push: PropTypes.func,
-  }).isRequired,
-};
+  }),
+}.isRequired;
 
 export default connect(null)(Login);

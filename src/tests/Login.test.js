@@ -71,7 +71,7 @@ describe('Teste a pagina de Login', () => {
     userEvent.type(screen.getByTestId(PASSWORD_INPUT_TEST_ID), VALID_PASSWORD);
     userEvent.click(screen.getByRole('button', { name: 'Entrar' }));
 
-    const state = store.getState(); // ??
+    const state = store.getState(); // resgata a store e verifica sua chave;
     expect(state.user.email).toContain(VALID_EMAIL);
   });
   it('Verifica se a rota é alterada para "/carteira" após o clique no botão', () => {

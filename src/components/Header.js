@@ -23,7 +23,6 @@ class Header extends Component {
         <div className="header-email" data-testid="email-field">{email}</div>
         <div className="header-total">
           Despesa total:
-          {' '}
           {
             isFetching ? <p>Loading</p>
               : (
